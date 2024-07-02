@@ -1,38 +1,37 @@
 #include <stdio.h>
 
-int gcd(int a, int b) {
-    while (b != 0) {
-        int temp = b;
-        b = a % b;
-        a = temp;
-    }
-    return a;
-}
-
-int lcm(int a, int b) {
-    return a / gcd(a, b) * b;
-}
-
 int main() {
-    int n;
-    printf("Enter the number of elements: ");
-    scanf("%d", &n);
+    int p;
+    printf("Enter the number of digits p: ");
+    scanf("%d", &p);
 
-    int numbers[20];
-
-    printf("Enter %d numbers: ", n);
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &numbers[i]);
+    if (p == 1) {
+        printf("Number of numbers: 2\n");
+        return 0;
     }
 
-    int result = numbers[0];
-
-    for (int i = 1; i < n; i++) {
-        result = lcm(result, numbers[i]);
+    if (p == 2) {
+        printf("Number of numbers: 4\n");
+        return 0;
     }
 
-    // Output the result
-    printf("Least Common Multiple: %d\n", result);
+    long long dp5[31] = {0};
+    long long dp9[31] = {0};
+    long long dp[31] = {0};
+
+    dp5[1] = 1;
+    dp9[1] = 1;
+    dp5[2] = 1 + 1;
+    dp9[2] = 1 + 1;
+
+    for (int i = 3; i <= p; i++) {
+        dp5[i] = dp9[i-1] + dp9[i-2];
+        dp9[i] = dp5[i-1] + dp5[i-2];
+    }
+
+    dp[p] = dp5[p] + dp9[p];
+
+    printf("Number of numbers: %lld\n", dp[p]);
 
     return 0;
 }
