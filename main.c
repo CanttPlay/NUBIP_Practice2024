@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdio.h> //its ex.6
 #include <math.h>
 
 int main() {
