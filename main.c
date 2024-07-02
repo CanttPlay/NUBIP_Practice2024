@@ -1,15 +1,17 @@
 #include <stdio.h>
+#include <math.h>
 
 int main() {
-    double t1, t2, t3;
+    int x1, y1, x2, y2;
+    printf("Enter the coordinates of the start and end points of the vector (x1 y1 x2 y2): ");
+    scanf("%d %d %d %d", &x1, &y1, &x2, &y2);
 
-    printf("Enter three values: ");
-    scanf("%lf %lf %lf", &t1, &t2, &t3);
+    int dx = x2 - x1;
+    int dy = y2 - y1;
 
-    double total_speed = (1.0 / t1) + (1.0 / t2) + (1.0 / t3);
-    double time_needed = 1.0 / total_speed;
+    double length = sqrt(dx * dx + dy * dy);
 
-    printf("Time needed to eat the pie: %.2f hours\n", time_needed);
+    printf("Length of the vector: %.6f\n", length);
 
     return 0;
 }
