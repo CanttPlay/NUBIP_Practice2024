@@ -1,25 +1,36 @@
 #include <stdio.h>
-#include <math.h>
+#include <string.h>
+
+long long factorial(int n) {
+    long long result = 1;
+    for (int i = 2; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+}
 
 int main() {
-    double x1, y1, r1, x2, y2, r2;
-    printf("Enter the coordinates of the centers and the radii of the circles (x1 y1 r1 x2 y2 r2): ");
-    scanf("%lf %lf %lf %lf %lf %lf", &x1, &y1, &r1, &x2, &y2, &r2);
+    char word[15];
+    printf("Enter a word: ");
+    scanf("%14s", word);
 
-    double d = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+    int length = strlen(word);
 
-    int result;
-    if (d == 0 && r1 == r2) {
-        result = -1;
-    } else if (d > r1 + r2 || d < fabs(r1 - r2)) {
-        result = 0;
-    } else if (d == r1 + r2 || d == fabs(r1 - r2)) {
-        result = 1;
-    } else {
-        result = 2;
+    int count[26] = {0};
+
+    for (int i = 0; i < length; i++) {
+        count[word[i] - 'A']++;
     }
 
-    printf("Number of intersection points: %d\n", result);
+    long long totalAnagrams = factorial(length);
+
+    for (int i = 0; i < 26; i++) {
+        if (count[i] > 1) {
+            totalAnagrams /= factorial(count[i]);
+        }
+    }
+
+    printf("Number of anagrams: %lld\n", totalAnagrams);
 
     return 0;
 }
