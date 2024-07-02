@@ -2,16 +2,24 @@
 #include <math.h>
 
 int main() {
-    int x1, y1, x2, y2;
-    printf("Enter the coordinates of the start and end points of the vector (x1 y1 x2 y2): ");
-    scanf("%d %d %d %d", &x1, &y1, &x2, &y2);
+    double x1, y1, r1, x2, y2, r2;
+    printf("Enter the coordinates of the centers and the radii of the circles (x1 y1 r1 x2 y2 r2): ");
+    scanf("%lf %lf %lf %lf %lf %lf", &x1, &y1, &r1, &x2, &y2, &r2);
 
-    int dx = x2 - x1;
-    int dy = y2 - y1;
+    double d = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 
-    double length = sqrt(dx * dx + dy * dy);
+    int result;
+    if (d == 0 && r1 == r2) {
+        result = -1;
+    } else if (d > r1 + r2 || d < fabs(r1 - r2)) {
+        result = 0;
+    } else if (d == r1 + r2 || d == fabs(r1 - r2)) {
+        result = 1;
+    } else {
+        result = 2;
+    }
 
-    printf("Length of the vector: %.6f\n", length);
+    printf("Number of intersection points: %d\n", result);
 
     return 0;
 }
