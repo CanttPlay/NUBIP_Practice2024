@@ -1,15 +1,57 @@
 #include <stdio.h>
 
+int minSteps(int x, int y, int* twoStepCount) {
+    if (x == y) return 0;
+
+    int current = x;
+    int steps = 0;
+    int k = 1;
+    int lastStep = 0;
+    *twoStepCount = 0;
+
+    printf("Path: %d", x);
+
+    while (current < y) {
+        current += k;
+        steps++;
+
+        printf(" -> %d", current);
+
+        if (k == 2) (*twoStepCount)++;
+
+        if (current < y) {
+            if (lastStep == k) {
+                k = k - 1 > 0 ? k - 1 : 1;
+            } else {
+                k++;
+            }
+        }
+
+        lastStep = k;
+    }
+
+    if (current != y) {
+        steps++;
+        printf(" -> %d", y);
+    }
+
+    printf("\n");
+
+    return steps;
+}
+
 int main() {
-    double t1, t2, t3;
+    int x, y;
+    int twoStepCount;
 
-    printf("Enter three values: ");
-    scanf("%lf %lf %lf", &t1, &t2, &t3);
+    printf("Enter x: ");
+    scanf("%d", &x);
+    printf("Enter y: ");
+    scanf("%d", &y);
 
-    double total_speed = (1.0 / t1) + (1.0 / t2) + (1.0 / t3);
-    double time_needed = 1.0 / total_speed;
-
-    printf("Time needed to eat the pie: %.2f hours\n", time_needed);
+    int result = minSteps(x, y, &twoStepCount);
+    printf("The minimum number of steps from %d to %d is: %d\n", x, y, result);
+    printf("Number of 2-step moves: %d\n", twoStepCount);
 
     return 0;
 }
